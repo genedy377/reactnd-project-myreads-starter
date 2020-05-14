@@ -1,31 +1,30 @@
-import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
-import './App.css'
-import { Route, Switch, Link } from 'react-router-dom'
-import NotFound from './Component/NotFound'
-import BookList from './Component/BookList'
-import Search from './Component/Search'
-
+import React, { Component } from "react";
+import * as BooksAPI from "./BooksAPI";
+import "./App.css";
+import { Route, Switch, Link } from "react-router-dom";
+import NotFound from "./Component/NotFound";
+import BookList from "./Component/BookList";
+import Search from "./Component/Search";
 
 class BooksApp extends Component {
   state = { books: [] };
 
   componentDidMount() {
     // get books on load
-    BooksAPI.getAll().then(books => this.setState({ books }));
+    BooksAPI.getAll().then((books) => this.setState({ books }));
   }
 
   changeShelf = (changedBook, shelf) => {
-    BooksAPI.update(changedBook, shelf).then(response => {
+    BooksAPI.update(changedBook, shelf).then((response) => {
       // set shelf for new or updated book
       changedBook.shelf = shelf;
       // update state with changed book
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         books: prevState.books
           // remove updated book from array
-          .filter(book => book.id !== changedBook.id)
+          .filter((book) => book.id !== changedBook.id)
           // add updated book to array
-          .concat(changedBook)
+          .concat(changedBook),
       }));
     });
   };
@@ -52,7 +51,9 @@ class BooksApp extends Component {
                 </div>
                 <BookList books={books} changeShelf={this.changeShelf} />
                 <div className="open-search">
-                  <Link to="/search">Search</Link>
+                  <Link to="/search">
+                    <button>Search</button>
+                  </Link>
                 </div>
               </div>
             )}
@@ -64,4 +65,4 @@ class BooksApp extends Component {
   }
 }
 
-export default BooksApp
+export default BooksApp;
